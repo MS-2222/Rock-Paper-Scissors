@@ -13,7 +13,7 @@ function game() {
     }
 
     if (player_wins > comp_wins) {
-        console.log(`You win! ${players_wins} to ${comp_wins}`);
+        console.log(`You win! ${player_wins} to ${comp_wins}`);
     }
     else if (player_wins < comp_wins) {
         console.log(`You lose! ${player_wins} to ${comp_wins}`);
