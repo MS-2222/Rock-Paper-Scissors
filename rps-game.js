@@ -1,26 +1,40 @@
 
+//window.addEventListener('click', game);
+//const buttons = document.querySelectorAll('button');
+//buttons.forEach(button => button.addEventListener('click', game));
 
 let player_wins = 0;
 let comp_wins = 0;
+let player_choice = 'string'
+
+let buttons = document.querySelectorAll('button');
+let buttonArray = Array.from(buttons);
+buttonArray.forEach(button => {
+    button.addEventListener('click', () => {
+        player_choice = button.id;
+        game();
+    });
+})
 
 function game() {
-    for (let i = 0; i < 5; i++) {
-        let player_choice = prompt("Enter Choice: ").toLowerCase();
-        let comp_choice = computerPlay();
-        playRound(player_choice, comp_choice);
-        console.log(player_wins);
-        console.log(comp_wins);
-    }
+   let comp_choice = computerPlay();
+   playRound(player_choice, comp_choice);
+   let div = document.querySelector('.results');
+   let content = document.createElement('p');
+   content.textContent = `Player Wins: ${player_wins}, Computer Wins: ${comp_wins}`;
+   div.appendChild(content);
+    
 
-    if (player_wins > comp_wins) {
-        console.log(`You win! ${player_wins} to ${comp_wins}`);
-    }
-    else if (player_wins < comp_wins) {
-        console.log(`You lose! ${player_wins} to ${comp_wins}`);
-    }
-    else {
-        console.log("The game was a draw!");
-    }
+   if (player_wins === 5) {
+        let winnerText = document.createElement('p');
+        winnerText.textContent = `You won the game! ${player_wins} to ${comp_wins}`;       
+        div.appendChild(winnerText);
+   }
+   else if (comp_wins === 5) {
+    let winnerText = document.createElement('p');
+    winnerText.textContent = `You lost the game! ${player_wins} to ${comp_wins}`;       
+    div.appendChild(winnerText);
+   }
 }
 
 
@@ -28,17 +42,26 @@ function playRound(player_choice, comp_choice) {
     if (player_choice === 'rock' && comp_choice === 'scissors' ||
         player_choice === 'paper' && comp_choice === 'rock' ||
         player_choice === 'scissors' && comp_choice === 'paper') {
-            console.log(`You win this round! ${player_choice} beats ${comp_choice}`);
+            let div = document.querySelector('.results');
+            let content = document.createElement('p');
+            content.textContent = `You win this round! ${player_choice} beats ${comp_choice}`;
+            div.appendChild(content);
             return ++player_wins;
         }
     else if (player_choice === 'rock' && comp_choice === 'paper' ||
             player_choice === 'paper' && comp_choice === 'scissors' ||
             player_choice === 'scissors' && comp_choice === 'rock') {
-                console.log(`You lose this round! ${comp_choice} beats ${player_choice}`);
+                let div = document.querySelector('.results');
+                let content = document.createElement('p');
+                content.textContent = `You lose this round! ${comp_choice} beats ${player_choice}`;
+                div.appendChild(content);
                 return ++comp_wins;
             }
     else {
-        console.log(`Draw this round! ${player_choice} matches ${comp_choice}`);
+        let div = document.querySelector('.results');
+        let content = document.createElement('p');
+        content.textContent = `Draw this round! ${player_choice} matches ${comp_choice}`;
+        div.appendChild(content);
     }
 }
 
@@ -57,5 +80,4 @@ function computerPlay() {
         let comp_choice = 'scissors';
         return comp_choice;
     }
-
 }
